@@ -2,14 +2,18 @@ import psycopg2
 from psycopg2.extras import RealDictCursor
 import logging
 from contextlib import contextmanager
+from dotenv import load_dotenv
+import os
 
 logger = logging.getLogger(__name__)
+load_dotenv()
 
 class DatabaseDriver:
     """Database driver for PostgreSQL connection."""
     
     def __init__(self):
-        self.connection_string = "postgresql://moving_requests_user:BmkuL559dcrMjSsMCqBAUYAXNnFVEkBd@dpg-d0qta2re5dus739t66t0-a.virginia-postgres.render.com/moving_requests"
+        self.connection_string = os.getenv("DATABASE_URL")
+
     
     @contextmanager
     def _get_connection(self):
